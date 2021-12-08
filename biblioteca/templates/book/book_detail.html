@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    {{book.title}} | Biblioteca
+{% endblock title %}
+
+{% block content %}
+    {% include 'base/header.html' %}
+    <div class="container p-5 my-5 border container-principal">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{book.cover_page.url}}" alt="{{book.title}}" class="rounded">
+            </div>
+            <div class="col-lg-8">
+                <h2 style="text-align: center;">{{book.title}}</h2>
+                <span class="badge bg-secondary" style="margin: 0 auto;">{{book.date}}</span>
+                <span class="badge bg-secondary">{{book.category}}</span>
+                <span class="badge bg-primary">{% for author in book.authors.all %}{{author}}{% endfor %}</span>
+                <div class="space"></div>
+                <h5>{{book.description}}</h5>
+                
+                {% if user.username %}
+                    <div class="space"></div>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{form}}
+                        <button type="submit" class="btn btn-primary">Solicitar prestamo</button>    
+                    </form>
+                    
+                {% else %}
+                    <div class="space"></div>
+                    <div class="alert alert-primary" style="text-align: center;">
+                        Debe estar registrado para solicitar un prestamo a la biblioteca.
+                        Si no esta registrado haga click <a href="#">aqui</a> 
+                    </div>
+                {% endif %}
+                    
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    
+    

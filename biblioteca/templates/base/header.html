@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'book_app:index' %}">Biblioteca</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'book_app:list-book' %}">Lista de libros</a>
+        </li>
+        {% if user.username %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'loan_app:loan-list' %}">Lista de prestamos</a>
+        </li>
+        {% endif %}  
+      </ul>
+      <!-- Login -->
+    </div>
+  </div>
+</nav>

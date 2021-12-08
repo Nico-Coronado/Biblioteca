@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %} {% load static %}
+{% block title %}
+    Inicio | Biblioteca
+{% endblock title %}
+{% block content %}
+{% include 'base/header.html' %}
+    <div class="container-fluid p-5 my-5 border container-principal">
+        <img src="{% static 'img/biblio.jpg' %}" class="mx-auto d-block images">
+        <div class="space"></div>
+        <div class="alert alert-primary welcome">
+            <h3>Bienvenidos!</h3>
+            <h5>Bienvenidos a la mejor biblioteca de Santiago, aca podras pedir los libros
+                que quieras a traves de nuestro famosisimo sistema de prestamos
+            </h5>
+        </div>
+{% endblock content %}
+    </div>

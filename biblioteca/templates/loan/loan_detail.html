@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+    Prestamo de {{loan.book.title}} | Biblioteca
+{% endblock title %}
+
+{% block content %}
+    {% include 'base/header.html' %}
+    <div class="container p-5 my-5 border container-principal">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{loan.book.cover_page.url}}" alt="{{loan.book.title}}" class="rounded">
+            </div>
+            <div class="col-lg-8">
+                <h2 style="text-align: center;">{{loan.book.title}}</h2>
+                <span class="badge bg-secondary" style="margin: 0 auto;">{{loan.book.date}}</span>
+                <span class="badge bg-secondary">{{loan.book.category}}</span>
+                <span class="badge bg-primary">{% for author in loan.book.authors.all %}{{author}}{% endfor %}</span>
+                <div class="space"></div>
+                <h5>{{loan.book.description}}</h5>
+                <div class="space"></div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h5>Fecha de prestamo: {{loan.loan_date}}</h5>
+                    </div>
+                    <div class="col-lg-6">
+                        {% if loan.return_date %}
+                            <h5>Ya devuelto: {{loan.return_date}}</h5>
+                        {% else %}
+                            <button class="btn btn-primary">Devolver libro</button>
+                        {% endif %}
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+{% endblock content %}

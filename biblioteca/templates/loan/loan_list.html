@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Lista de prestamos | Biblioteca
+{% endblock title %}
+{% block content %}
+    {% include 'base/header.html' %}
+    <div class="container p-5 my-5 border container-principal">
+        <div class="row">
+            {% for book in list %}
+            <div class="col-lg-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{book.book.cover_page.url}}" alt="{{book.title}}">
+                    <div class="card-body">
+                      <h4 class="card-title">{{book.book.title}}</h4>
+                       {% for author in book.book.authors.all %} <p>Autor: {{ author }}</p> {% endfor %}
+                      <a href="{% url 'loan_app:detail-loan' book.book.id %}" class="btn btn-primary">Ver detalles del prestamo</a>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    
+{% endblock content %}    

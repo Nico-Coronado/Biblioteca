@@ -1,26 +1,37 @@
 from django.db import models
 from django.db.models.fields import PositiveIntegerField
+from django.db.models.signals import post_save
+# 
+from PIL import Image
 
-from autor.models import Autor
+from autor.models import Author
+from . managers import BookManager
 
-
-class Categoria(models.Model):
-    nombre = models.CharField(max_length=30)
-
+class Category(models.Model):
+    category = models.CharField("Categoria", max_length=50)
 
     def __str__(self):
-        return self.nombre
+        return self.category
 
-class Libro(models.Model):
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, related_name='categoria_libro')
-    autores = models.ManyToManyField(Autor)
-    titulo =  models.CharField(max_length=50)
-    fecha = models.DateField("Fecha de lanzamiento")
-    portada = models.ImageField("Imagen de portada", upload_to="portadas")
-    visitas = models.PositiveIntegerField()
+class Book(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='categoria_libro')
+    authors = models.ManyToManyField(Author)
+    title =  models.CharField(max_length=50)
+    description = models.TextField(max_length=150,)
+    date = models.DateField("Fecha de lanzamiento")
+    cover_page = models.ImageField("Imagen de portada", upload_to="portadas")
+    visits = models.PositiveIntegerField()
     stock = PositiveIntegerField(default=0)
-    # class Meta:
-        # La clase meta nos ayudara a personalizar el administrador de django
+
+    objects = BookManager()
 
     def __str__(self):
-        return str(self.categoria.id) + ' ' + self.titulo
+        return self.title
+
+# lower the quality of the cover by 20%
+def optimizeImage(sender,instance, **kwargs):
+    if instance.cover_page:
+        portada = Image.open(instance.cover_page.path) 
+        portada.save(instance.cover_page.path, quality=20, optimize=True) 
+                                                                       
+post_save.connect(optimizeImage, sender=Book)

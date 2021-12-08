@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Lista de libros | Biblioteca
+{% endblock title %}
+{% block content %}
+    {% include 'base/header.html' %}
+    <div class="container-fluid p-5 my-5 border container-principal">
+        <form action="" method="get">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-3">
+
+                </div>
+                <div class="col-lg-7">
+                    <input type="text" id="kword" name="kword" class="form-control" placeholder="Buscar por titulo...">
+                </div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+        <div class="space"></div>
+        <div class="row">
+            <div class="col-lg-2">
+                <!-- Filtros -->
+                <form action="" method="get">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <label class="form-label">{{field.label}}</label>
+                        {{field}}
+                    {% endfor %}
+                    <button class="btn btn-primary" type="submit">Filtrar</button>
+                </form>
+            </div>
+            <div class="col-lg-10">
+                <div class="row">
+                    {% for book in list %}
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{book.cover_page.url}}" alt="{{book.title}}">
+                                <div class="card-body">
+                                  <h4 class="card-title">{{book.title}}</h4>
+                                   {% for author in book.authors.all %} <p>Autor: {{ author }}</p> {% endfor %}
+                                  <a href="{% url 'book_app:detail-book' book.id %}" class="btn btn-primary">Ver detalles</a>
+                                </div>
+                              </div>
+                        </div>
+                    {% endfor %}         
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    
+    

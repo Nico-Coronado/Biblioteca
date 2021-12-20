@@ -1,26 +1,38 @@
-from django.shortcuts import render
-from django.views.generic import FormView, ListView, DetailView
+from django.views.generic import FormView, ListView, DetailView, DeleteView
 from django.urls.base import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from . forms import LoanForm
+from . forms import LoanForm, LoanFormReturned
 from . models import Loan
 
 class LoanFormView(FormView):
     form_class = LoanForm
-    success_url = reverse_lazy('loan_app:loan_list')
+    success_url = reverse_lazy('loan_app:loan-list')
 
     def form_valid(self, form):
         user = self.request.user
-        print(user)
-        print(self.get_object().id)
+
         Loan.objects.create(
             reader = user,
             book = self.get_object(),
             returned = False
         )
-
         return super(LoanFormView, self).form_valid(form)
+
+class LoanFormReturnedView(FormView):
+    form_class = LoanFormReturned
+    success_url = reverse_lazy('loan_app:loan-list')
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        Loan.objects.update(
+            id = self.get_object().id,
+            reader = user,
+            book = self.get_object(),
+            returned = True
+        )
+        return super(LoanFormReturnedView, self).form_valid(form)
 
 
 class LoanListView(LoginRequiredMixin, ListView):
@@ -36,7 +48,7 @@ class LoanListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class LoanDetailView(DetailView):
+class LoanDetailView(LoanFormReturnedView, DetailView):
     model = Loan
     template_name = "loan/loan_detail.html"
     context_object_name = 'loan'

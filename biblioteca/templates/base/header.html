@@ -15,7 +15,12 @@
         </li>
         {% endif %}  
       </ul>
-      <!-- Login -->
+      {% if user.username %}
+          <a href="{% url 'user_app:logout'%}" class="nav-link">Cerrar session</a>
+      {% else %}
+          <a href="{% url 'user_app:register'%}" class="nav-link">Registrarse</a>
+          <a href="{% url 'user_app:login' %}" class="nav-link">Iniciar sesion</a>
+      {% endif %}
     </div>
   </div>
 </nav>

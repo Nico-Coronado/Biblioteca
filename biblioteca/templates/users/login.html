@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+{% block title %}
+    Iniciar sesion | Biblioteca
+{% endblock %}
+{% block content %}
+    {% include "base/header.html" %}
+    <div class="container p-5 my-5 border container-principal">
+        <h3>Inicio de sesion: </h3>
+        {% if form.errors %}
+            <div class="alert alert-warning" style="margin: 0 auto; width: 70%">
+                <strong>{{ form.errors }}</strong>
+            </div>
+        {% endif %}
+        <div class="forms">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                {% endfor %}
+                <div class="space"></div>
+                <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

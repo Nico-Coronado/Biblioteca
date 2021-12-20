@@ -27,7 +27,11 @@
                         {% if loan.return_date %}
                             <h5>Ya devuelto: {{loan.return_date}}</h5>
                         {% else %}
-                            <button class="btn btn-primary">Devolver libro</button>
+                            <form action="" method="post">{% csrf_token %}
+                            {{ form }}
+                                <button class="btn btn-primary" type="submit">Devolver libro</button>
+                            </form>
+
                         {% endif %}
                     </div>
                 </div>

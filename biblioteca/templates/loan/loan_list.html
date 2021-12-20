@@ -13,7 +13,7 @@
                     <div class="card-body">
                       <h4 class="card-title">{{book.book.title}}</h4>
                        {% for author in book.book.authors.all %} <p>Autor: {{ author }}</p> {% endfor %}
-                      <a href="{% url 'loan_app:detail-loan' book.book.id %}" class="btn btn-primary">Ver detalles del prestamo</a>
+                      <a href="{% url 'loan_app:detail-loan' book.id %}" class="btn btn-primary">Ver detalles del prestamo</a>
                     </div>
                   </div>
             </div>

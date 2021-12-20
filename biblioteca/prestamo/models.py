@@ -15,4 +15,4 @@ class Loan(models.Model):
     objects = LoanManager()
 
     def __str__(self):
-        return  str(self.book) + " | " + str(self.reader)
+        return str(self.book) + " | " + str(self.reader)

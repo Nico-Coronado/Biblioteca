@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+{% block title %}
+    Registrarse | Biblioteca
+{% endblock %}
+{% block content %}
+    {% include "base/header.html" %}
+    <div class="container p-5 my-5 border container-principal">
+        <h3>Registrarse: </h3>
+        {% if form.errors %}
+        <div class="alert alert-warning" style="margin: 0 auto; width: 70%">
+            <strong>{{ form.errors }}</strong>
+        </div>
+        {% endif %}
+        <div class="forms">
+            <div class="mb-3 mt-3">
+                <form action="" method="post">
+                    {% csrf_token %}
+                {% for field in form %}
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    <div style="padding: 2px"></div>
+                {% endfor %}
+
+                    <div class="space"></div>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

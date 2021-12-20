@@ -37,3 +37,7 @@ body{
 .card h4{
     text-align: center;
 }
+.forms{
+    margin: 0 auto;
+    width: 50%;
+}

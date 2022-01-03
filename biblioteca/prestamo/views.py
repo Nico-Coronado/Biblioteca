@@ -5,6 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from . forms import LoanForm, LoanFormReturned
 from . models import Loan
 
+import datetime
+
 class LoanFormView(FormView):
     form_class = LoanForm
     success_url = reverse_lazy('loan_app:loan-list')
@@ -24,14 +26,10 @@ class LoanFormReturnedView(FormView):
     success_url = reverse_lazy('loan_app:loan-list')
 
     def form_valid(self, form):
-        user = self.request.user
-
-        Loan.objects.update(
-            id = self.get_object().id,
-            reader = user,
-            book = self.get_object(),
-            returned = True
-        )
+        Loan.objects.filter(pk=self.get_object().id).update(
+            return_date=datetime.datetime.today(),
+            returned=True
+            )
         return super(LoanFormReturnedView, self).form_valid(form)
 
 

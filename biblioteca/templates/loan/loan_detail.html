@@ -24,7 +24,7 @@
                         <h5>Fecha de prestamo: {{loan.loan_date}}</h5>
                     </div>
                     <div class="col-lg-6">
-                        {% if loan.return_date %}
+                        {% if loan.returned %}
                             <h5>Ya devuelto: {{loan.return_date}}</h5>
                         {% else %}
                             <form action="" method="post">{% csrf_token %}
